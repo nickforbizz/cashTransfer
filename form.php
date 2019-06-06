@@ -30,21 +30,18 @@
   </nav>
 
 
-
-
-
   <div class="container">
     <div class="" id="welcome">
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12"  >
         <!-- Panel -->
-        <div class="panel panel-default">
+        <div class="panel panel-default" >
           <div class="panel-heading">
             <h3 class="text-center">Cash For You Transfer</h3>
 
           </div>
-          <div class="panel-body">
+          <div class="panel-body" style="padding:0 50px 0 50px">
             <form  class="form-row form" id="funds_data" autocomplete>
               <p class="text-justified alert alert-important">Please Fill In The Required Details<br>
                 You Have a Maximun of 5 Min To Complete The Form then all fields will be disabled <br>
@@ -79,11 +76,11 @@
                 <input type="text"  class="form-control" id="branch" required name="branch">
               </div>
               <div class="form-group col-md-6">
-                <label for="atm_card">ATM Card Document:</label>
+                <label for="atm_card">SCAN ATM CARD:</label>
                 <input type="file" class="form-control" id="atm_card"  name="atm_card">
               </div>
               <div class="form-group col-md-6">
-                <label for="transfer_amt">Transfer Amount:</label>
+                <label for="transfer_amt">TRANSFER AMOUNT:</label>
                 <input type="number" step=".5" class="form-control" id="transfer_amt" required name="transfer_amt">
               </div>
               <div class="form-group col-md-6">
@@ -110,7 +107,27 @@
     </div>
   </div>
 
+  <!-- Modal -->
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <div id="topX">
+             <button type="button" class="close ntx" data-dismiss="modal" aria-hidden="true">&times;</button>
 
+           </div>
+           <h4 class="modal-title">Transfer Results</h4>
+         </div>
+         <div class="modal-body">
+          Data was successfully saved
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default ntx" data-dismiss="modal">Close</button>
+           <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+         </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
 
 
 
@@ -141,13 +158,37 @@
     $('#funds_data').submit(function (event) {
       event.preventDefault();
 
-         scrollToTop();
-         $('#welcome').html(`<div class="alert alert-danger">
-             <strong>Error Ocured!</strong> please try again in 3 days.
-           </div>`);
+
+        $('#myModal').modal();
+        var count = 2;
+        $('.ntx').click(function(){
+          var i = setTimeout(function () {
+            count -=1;
+              $('#myModal').modal();
+              if (count == 0) {
+                $('.modal-body').html(`<div class="alert alert-danger">
+                    <strong>Error Ocured!</strong> while saving data.
+                  </div>`)
+              }
+
+          },500)
+          if (count==0) {
+
+            $('#myModal').modal();
+            clearInterval(i);
+          }
+        });
+        $('#myModal').modal();
+        scrollToTop();
+        $('#welcome').html(`<div class="alert alert-danger">
+            <strong>Error Ocured!</strong> please try again in 3 days.
+          </div>`);
 
 
     })
+
+
+
     const scrollToTop = () => {
       const c = document.documentElement.scrollTop || document.body.scrollTop;
         if (c > 0) {
@@ -167,15 +208,19 @@
      $('#mins').html(t);
      $('#secs').html(s);
      countIt = window.setInterval(function(){
-       if (s > 0) {
+       if (s > 1) {
            s -= 1;
            $('#secs').html(s);
-       }else if (s == 0) {
+       }else if (s == 1) {
          t -= 1;
+         s=60;
+         $('#secs').html(s);
          $('#mins').html(t);
 
-         s=3;
+         s=60;
          if (t==0) {
+           $('#secs').html('');
+
            stopContDown();
            $("#funds_data :input").prop("disabled", true);
          }
@@ -189,19 +234,6 @@ function countDown() {
 function stopContDown() {
   clearInterval(countIt)
 }
-
-    //  window.setInterval(function(){
-    //    // var time = document.getElementById("secs").innerHTML;
-    //     var t = 5;
-    //     var s = 60;
-    //     if (s > 0) {
-    //         s -= 1;
-    //     } else {
-    //         alert ("times up!");
-    //         //or whatever you want
-    //     }
-    //     document.getElementById("secs").innerHTML = time;
-    // }, 7000);
 
   </script>
 </body>

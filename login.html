@@ -44,7 +44,7 @@
               sessionStorage.setItem("_token", data.token);
               alert("Good To GO");
               setTimeout(function(){
-                window.location = "./form.php?token="+data.token
+                window.location = "./details.php?token="+data.token
               },1000)
 
             }else if (data == -1) {

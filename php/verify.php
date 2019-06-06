@@ -28,7 +28,10 @@ $ok = array(
   'ok' =>1
 );
 
-if ($email == 'admin@gmail.com' && $passwd == '21232f297a57a5a743894a0e4a801fc3') {
+// view the hashed password as this
+//php echo md5('K1278394') 
+
+if ($email == 'nyamburamarthairungu@gmail.com' && $passwd == '9d07ebc0ff5b896060dfe0495ed7c040') {
   echo json_encode($ok);
 }else {
   // echo "-1";
