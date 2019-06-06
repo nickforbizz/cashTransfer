@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Cash For You Transfer</title>
+  <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style media="screen">
+
+    </style>
+</head>
+<body>
+    <div class="loginbox">
+    <img src="./c4u.png" class="avatar">
+        <h1>Login Here</h1>
+        <form id="login">
+            <p>Email</p>
+            <input type="email" name="email" placeholder="Enter email">
+            <p>Password</p>
+            <input type="password" name="pwd" placeholder="Enter Password">
+            <input type="submit" name="" value="Login">
+        </form>
+
+
+
+    </div>
+    <script src="./js/jquery-1.11.1.min.js" ></script>
+    <script src="./js/bootstrap.js" charset="utf-8"></script>
+
+
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+    $('#login').submit(function (event) {
+
+      event.preventDefault();
+      $.ajax({
+          url: 'php/verify.php',
+          method: 'post',
+          data: $(`#login`).serialize(),
+          success: function(data){
+            data = JSON.parse(data);
+            console.log(data.ok);
+            if (data.ok==1) {
+              sessionStorage.setItem("_token", data.token);
+              alert("Good To GO");
+              setTimeout(function(){
+                window.location = "./form.php?token="+data.token
+              },1000)
+
+            }else if (data == -1) {
+               alert("Wrong password or email, please try again.......");
+            }
+          },error: function(data){console.log(data);}
+      })
+
+
+    });
+});
+
+
+    </script>
+</body>
+</html>
